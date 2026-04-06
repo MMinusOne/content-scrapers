@@ -167,6 +167,7 @@ export class AllManga implements Scraper {
 
   async fetchPanels(
     id: string,
+    stream?: (chapterNumber: number, panels: MangaPanel[]) => void,
   ): Promise<{ chapter: number; panels: MangaPanel[] }[]> {
     const mangaInfo = await this.getInfo(id);
     if (!mangaInfo) return [];
@@ -176,8 +177,8 @@ export class AllManga implements Scraper {
     for (let i = 0; i < Number(mangaInfo.chapterCount); i++) {
       try {
         const panels = await this.fetchChapterPanels(id, i);
-        console.log(`Chapter: ${i}`);
         results.push({ chapter: i, panels });
+        if (stream) stream(i, panels);
       } catch (err: any) {
         console.error(`Skipping chapter ${i}:`, err.message);
       }
