@@ -1,5 +1,6 @@
 import type {
   CharacterInfo,
+  FetchPopularOptions,
   MangaInfo,
   MangaPanel,
   Scraper,
@@ -58,6 +59,48 @@ export class AllManga implements Scraper {
       }
 
       return request.data.data.mangas.edges;
+    } catch (error) {
+      console.error("Search failed: ", error);
+      return [];
+    }
+  }
+
+  async fetchPopular(options?: FetchPopularOptions) {
+    const extensions = {
+      persistedQuery: {
+        version: 1,
+        sha256Hash:
+          "60f50b84bb545fa25ee7f7c8c0adbf8f5cea40f7b1ef8501cbbff70e38589489",
+      },
+    };
+
+    const variables = {
+      type: "manga",
+      size: options?.size || 20,
+      dateRange: options?.dateRange || 1,
+      page: options?.page || 1,
+      allowAdult: options?.allowAdult || false,
+      allowUnknown: options?.allowUnknown || false,
+      limit: options?.limit || 500,
+    };
+
+    const url = new URL(this.baseUrl);
+
+    url.searchParams.append("variables", JSON.stringify(variables));
+    url.searchParams.append("extensions", JSON.stringify(extensions));
+
+    try {
+      const request = await RequestManager.get(url.toString(), {
+        headers: {
+          Referer: "https://allmanga.to/",
+        },
+      });
+
+      if (!request?.data?.data?.queryPopular?.recommendations) {
+        throw new Error("Invalid API response structure");
+      }
+
+      return request?.data?.data?.queryPopular?.recommendations;
     } catch (error) {
       console.error("Search failed: ", error);
       return [];

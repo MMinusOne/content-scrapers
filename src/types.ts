@@ -196,6 +196,15 @@ export interface ChapterMangaPanel {
   panels: MangaPanel[];
 }
 
+export interface FetchPopularOptions {
+  size?: number;
+  dateRange?: number;
+  page?: number;
+  allowAdult?: boolean;
+  allowUnknown?: boolean;
+  limit?: number;
+}
+
 export abstract class Scraper {
   abstract baseUrl: string;
   abstract search(
