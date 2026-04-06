@@ -1,5 +1,5 @@
 {
-  "name": "allmanga.to-scraper",
+  "name": "mminusone/content-scrapers",
   "module": "index.ts",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,7 +15,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "postinstal": "npm run build"
   },
   "dependencies": {
     "@types/cheerio": "^1.0.0",
