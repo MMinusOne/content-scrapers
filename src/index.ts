@@ -1,3 +1,1 @@
-// https://allmanga.to
-
-
+export * from "./scrapers/AllManga";
