@@ -14,7 +14,7 @@
     "esModuleInterop": true,
 
     // Bundler mode
-    "moduleResolution": "bundler",
+    // "moduleResolution": "bundler",
     "verbatimModuleSyntax": false,
     "noEmit": false,
 
