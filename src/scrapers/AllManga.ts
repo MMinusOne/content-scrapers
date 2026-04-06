@@ -5,7 +5,7 @@ import type {
   Scraper,
   SearchOptions,
   SearchResult,
-} from "../../types";
+} from "../types";
 import * as cheerio from "cheerio";
 import { RequestManager } from "../lib/RequestManager";
 

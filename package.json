@@ -1,20 +1,28 @@
 {
   "name": "allmanga.to-scraper",
   "module": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
   "dependencies": {
     "@types/cheerio": "^1.0.0",
-    "@types/jsdom": "^28.0.1",
     "cheerio": "^1.2.0",
-    "got-scraping": "^4.2.1",
-    "jsdom": "^29.0.1",
-    "p-limit": "^7.3.0"
-  }
+    "got-scraping": "^4.2.1"
+  },
+  "files": [
+    "dist"
+  ]
 }

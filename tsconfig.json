@@ -2,17 +2,21 @@
   "compilerOptions": {
     // Environment setup & latest features
     "lib": ["ESNext"],
-    "target": "ESNext",
-    "module": "Preserve",
+    "target": "es2020",
+    "module": "commonjs",
     "moduleDetection": "force",
     "jsx": "react-jsx",
     "allowJs": true,
 
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "declaration": true,
+    "esModuleInterop": true,
+
     // Bundler mode
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "noEmit": true,
+    "verbatimModuleSyntax": false,
+    "noEmit": false,
 
     // Best practices
     "strict": true,
@@ -27,5 +31,8 @@
     "noPropertyAccessFromIndexSignature": false,
 
     "types": ["bun"]
-  }
+  },
+
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

@@ -1,4 +1,4 @@
-import type { RequestResponse } from "../../types";
+import type { RequestResponse } from "../types";
 
 export class RequestManager {
   private static async fetchWithRetry(
