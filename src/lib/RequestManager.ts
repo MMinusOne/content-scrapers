@@ -83,7 +83,6 @@ export class RequestManager {
   ): Promise<RequestResponse> {
     try {
       const request = await this.fetchWithRetry(input, init);
-
       const text = await request.text();
 
       return {
@@ -92,6 +91,21 @@ export class RequestManager {
       };
     } catch (error: any) {
       console.error("[GET TEXT ERROR]", error.message);
+      throw error;
+    }
+  }
+
+  static async getAsBuf(
+    input: string | URL | Request,
+    init?: RequestInit,
+  ): Promise<ArrayBuffer> {
+    try {
+      const request = await this.fetchWithRetry(input, init);
+      const arrayBuffer = await request.arrayBuffer();
+
+      return arrayBuffer;
+    } catch (error: any) {
+      console.error("[GET BUFFER ERROR]", error.message);
       throw error;
     }
   }

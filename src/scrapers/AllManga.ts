@@ -13,6 +13,8 @@ import { RequestManager } from "../lib/RequestManager";
 export class AllManga implements Scraper {
   baseUrl: string = "https://api.allanime.day/api";
   basePageUrl: string = "https://allmanga.to/";
+  singlePanelProxyUrl: string = "https://youtu-chan.com/";
+  chapterProxyUrl: string = "https://allmanga.to/";
 
   constructor() {}
 
@@ -199,7 +201,7 @@ export class AllManga implements Scraper {
       }
 
       return edges[0].pictureUrls.map((p: any) => ({
-        name: p.num,
+        num: p.num,
         url: edges[0].pictureUrlHead.concat(p.url),
       }));
     } catch (error: any) {
@@ -228,5 +230,18 @@ export class AllManga implements Scraper {
     }
 
     return results;
+  }
+
+  async downloadPanel(panelUrl: string): Promise<Buffer | null> {
+    try {
+      const request = await RequestManager.getAsBuf(panelUrl, {
+        headers: { Referer: this.singlePanelProxyUrl },
+      });
+
+      return Buffer.from(request);
+    } catch (error: any) {
+      console.error(`Failed download panel ${panelUrl}:`, error.message);
+      return null;
+    }
   }
 }
