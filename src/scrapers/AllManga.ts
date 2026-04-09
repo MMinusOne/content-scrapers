@@ -8,7 +8,7 @@ import type {
   SearchResult,
 } from "../types";
 import * as cheerio from "cheerio";
-import { RequestManager } from "../lib/RequestManager";
+import { RequestManager } from "../lib/RequestManager.ts";
 
 export class AllManga implements Scraper {
   baseUrl: string = "https://api.allanime.day/api";
