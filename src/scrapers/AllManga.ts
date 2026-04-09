@@ -168,7 +168,7 @@ export class AllManga implements Scraper {
     }
   }
 
-  async fetchChapterPanels(id: string, chapter: number): Promise<MangaPanel[]> {
+  async fetchChapterPanels(id: string, chapter: string): Promise<MangaPanel[]> {
     const extensions = {
       persistedQuery: {
         version: 1,
@@ -180,7 +180,7 @@ export class AllManga implements Scraper {
     const variables = {
       mangaId: id,
       translationType: "sub",
-      chapterString: chapter.toString(),
+      chapterString: chapter,
       limit: 10_0000,
       offset: 0,
     };
@@ -212,8 +212,8 @@ export class AllManga implements Scraper {
 
   async fetchPanels(
     id: string,
-    stream?: (chapterNumber: number, panels: MangaPanel[]) => void,
-  ): Promise<{ chapter: number; panels: MangaPanel[] }[]> {
+    stream?: (chapter: string, panels: MangaPanel[]) => void,
+  ): Promise<{ chapter: string; panels: MangaPanel[] }[]> {
     const mangaInfo = await this.getInfo(id);
     if (!mangaInfo) {
       console.error("No manga info for", id);
@@ -222,13 +222,13 @@ export class AllManga implements Scraper {
 
     const results = [];
 
-    for (let i = 0; i < Number(mangaInfo.chapterCount); i++) {
+    for (const chapter of mangaInfo.availableChaptersDetail.sub) {
       try {
-        const panels = await this.fetchChapterPanels(id, i);
-        results.push({ chapter: i, panels });
-        if (stream) stream(i, panels);
+        const panels = await this.fetchChapterPanels(id, chapter);
+        results.push({ chapter, panels });
+        if (stream) stream(chapter, panels);
       } catch (err: any) {
-        console.error(`Skipping chapter ${i}:`, err.message);
+        console.error(`Skipping chapter ${chapter}:`, err.message);
       }
     }
 
