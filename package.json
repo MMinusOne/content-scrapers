@@ -1,5 +1,5 @@
 {
-  "name": "mminusone/content-scrapers",
+  "name": "@mminusone/content-scrapers",
   "module": "index.ts",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
