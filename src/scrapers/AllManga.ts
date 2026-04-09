@@ -215,7 +215,10 @@ export class AllManga implements Scraper {
     stream?: (chapterNumber: number, panels: MangaPanel[]) => void,
   ): Promise<{ chapter: number; panels: MangaPanel[] }[]> {
     const mangaInfo = await this.getInfo(id);
-    if (!mangaInfo) return [];
+    if (!mangaInfo) {
+      console.error("No manga info for", id);
+      return [];
+    }
 
     const results = [];
 
